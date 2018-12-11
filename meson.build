@@ -15,10 +15,14 @@ tree_sitter_sources = ['vendor/tree-sitter/src/runtime/runtime.c',
   'fixtures/tree-sitter-javascript/src/parser.c',
   'fixtures/tree-sitter-rust/src/scanner.c',
   'fixtures/tree-sitter-rust/src/parser.c']
-static_library('tree-sitter-runtime', tree_sitter_sources, 
+
+tree_sitter_lib = static_library('tree-sitter-runtime', tree_sitter_sources, 
   include_directories: [
     include_directories('vendor/tree-sitter/src'), 
     include_directories('vendor/tree-sitter/include'),
     include_directories('vendor/tree-sitter/externals/utf8proc')
     ]
   )
+
+subdir('src')
+
