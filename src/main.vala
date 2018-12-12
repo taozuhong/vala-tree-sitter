@@ -26,5 +26,5 @@ void main(string[] args) {
   print("language version: %"+uint32.FORMAT+"\n", version);
   var tree = parser.parse_string(null, source_code.data);
   var root_node = tree.root_node();
-  print("type root node: %s\n", root_node.type());
+  print("AST: %s\n", root_node.to_str());
 }

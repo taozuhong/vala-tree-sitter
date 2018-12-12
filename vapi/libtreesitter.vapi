@@ -141,6 +141,9 @@ namespace TreeSitter {
     //const Tree *tree;
     [CCode (cname = "ts_node_type")]
     public string type ();
+
+    [CCode (cname = "ts_node_string")]
+    public string to_str ();
   }
 
 
