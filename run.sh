@@ -1,5 +1,1 @@
-rm -rf build
-meson build
-ninja -v -C build
-
-./build/src/tree-walker
+./build/src/tree-walker "$@"

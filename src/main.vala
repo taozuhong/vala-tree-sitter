@@ -17,7 +17,7 @@ void main(string[] args) {
 
   unowned TreeSitter.Language language = get_language_json();
   if (language_name == "c") {
-    language = get_language_json();
+    language = get_language_c();
   } else if (language_name == "json") {
     language = get_language_json();
   }
