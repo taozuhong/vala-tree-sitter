@@ -1,4 +1,4 @@
-[CCode (cheader_filename = "../vendor/tree-sitter/include/tree_sitter/runtime.h")]
+[CCode (cheader_filename = "tree_sitter/runtime.h")]
 namespace TreeSitter {
 
   [CCode (cname = "TREE_SITTER_LANGUAGE_VERSION")]
@@ -28,7 +28,7 @@ namespace TreeSitter {
   public struct Symbol : uint16 {
   }
 
-  [CCode (cname = "TSLanguage") ]
+  [CCode (cname = "TSLanguage", cheader_filename = "tree_sitter/runtime.h") ]
   [Compact]
   public class Language {
     uint32 version;
@@ -61,10 +61,10 @@ namespace TreeSitter {
     public uint32 get_symbol_count ();
 
     [CCode (cname = "ts_language_symbol_name")]
-    public char* get_symbol_name (Symbol symbol);
+    public unowned string get_symbol_name (Symbol symbol);
 
     [CCode (cname = "ts_language_symbol_for_name")]
-    public Symbol symbol_for_name (char* name);
+    public Symbol symbol_for_name (string name);
 
     [CCode (cname = "ts_language_symbol_type")]
     public SymbolType get_symbol_type (Symbol symbol);
@@ -74,13 +74,13 @@ namespace TreeSitter {
   }
 
   [CCode (cname = "tree_sitter_titi")]
-  public static Language? get_language_titi ();
+  public static unowned Language? get_language_titi ();
 
   [CCode (cname = "tree_sitter_json")]
-  public static Language? get_language_json ();
+  public static unowned Language? get_language_json ();
 
   [CCode (cname = "tree_sitter_c")]
-  public static Language? get_language_c ();
+  public static unowned Language? get_language_c ();
 
   [CCode (cname = "TSParser", free_function = "ts_parser_delete")]
   [Compact]
@@ -89,13 +89,13 @@ namespace TreeSitter {
       public Parser ();
 
       [CCode (cname = "ts_parser_language")]
-      public Language get_language ();
+      public unowned Language get_language ();
 
       [CCode (cname = "ts_parser_set_language")]
-      public bool set_language (Language *language);
+      public bool set_language (Language language);
 
       [CCode (cname = "ts_parser_parse_string")]
-      public Tree parse_string (Tree? tree, char* source, uint32 len);
+      public Tree parse_string (Tree? tree, string source, uint32 len);
   }
 
   [CCode (cname = "TSTree", free_function = "ts_tree_delete")]
