@@ -28,7 +28,7 @@ namespace TreeSitter {
   public struct Symbol : uint16 {
   }
 
-  [CCode (cname = "TSLanguage", cheader_filename = "tree_sitter/runtime.h") ]
+  [CCode (cname = "TSLanguage")]
   [Compact]
   public class Language {
     uint32 version;
@@ -73,15 +73,6 @@ namespace TreeSitter {
     public uint32 get_version ();
   }
 
-  [CCode (cname = "tree_sitter_titi")]
-  public static unowned Language? get_language_titi ();
-
-  [CCode (cname = "tree_sitter_json")]
-  public static unowned Language? get_language_json ();
-
-  [CCode (cname = "tree_sitter_c")]
-  public static unowned Language? get_language_c ();
-
   [CCode (cname = "TSParser", free_function = "ts_parser_delete")]
   [Compact]
   public class Parser {
@@ -95,7 +86,7 @@ namespace TreeSitter {
       public bool set_language (Language language);
 
       [CCode (cname = "ts_parser_parse_string")]
-      public Tree parse_string (Tree? tree, string source, uint32 len);
+      public Tree parse_string (Tree? tree, [CCode (array_length_type = "uint32_t")] uint8[] source);
   }
 
   [CCode (cname = "TSTree", free_function = "ts_tree_delete")]
