@@ -96,6 +96,7 @@ namespace TreeSitter {
       public Node root_node ();
   }
 
+  [SimpleType]
   [CCode (cname = "TSPoint", has_type_id = false)]
   public struct Point {
     uint32 row;
@@ -136,22 +137,48 @@ namespace TreeSitter {
   [SimpleType]
   [CCode (cname = "TSNode", has_type_id = false)]
   public struct Node {
-    uint32 context[4];
-    //const void *id;
-    //const Tree *tree;
+
     [CCode (cname = "ts_node_type")]
-    public string type ();
+    public unowned string type ();
 
     [CCode (cname = "ts_node_string")]
     public string to_str ();
+
+    [CCode (cname = "ts_node_start_point")]
+    public Point start_point ();
+
+    [CCode (cname = "ts_node_end_point")]
+    public Point end_point ();
+
+    [CCode (cname = "ts_node_start_byte")]
+    public uint32 start_byte ();
+
+    [CCode (cname = "ts_node_end_byte")]
+    public uint32 end_byte ();
+
   }
 
-
-  [CCode (cname = "TSTreeCursor", has_type_id = false)]
-  public struct TreeCursor {
+  [CCode (cname = "TSTreeCursor", free_function = "ts_tree_cursor_delete", has_type_id = false)]
+  [Compact]
+  public class TreeCursor {
     //const void *tree;
     //const void *id;
     uint32 context[2];
+
+    [CCode (cname = "ts_tree_cursor_new")]
+    public TreeCursor (Node node);
+
+    [CCode (cname = "ts_tree_cursor_goto_next_sibling")]
+    public bool goto_next_sibling ();
+
+    [CCode (cname = "ts_tree_cursor_goto_first_child")]
+    public bool goto_first_child ();
+
+    [CCode (cname = "ts_tree_cursor_current_node")]
+    public Node current_node ();
+
+    [CCode (cname = "ts_tree_cursor_goto_parent")]
+    public Node goto_parent ();
  }
 }
 
@@ -176,10 +203,6 @@ TSRange *ts_tree_get_changed_ranges(const TSTree *, const TSTree *, uint32_t *);
 void ts_tree_print_dot_graph(const TSTree *, FILE *);
 const TSLanguage *ts_tree_language(const TSTree *);
 
-uint32_t ts_node_start_byte(TSNode);
-TSPoint ts_node_start_point(TSNode);
-uint32_t ts_node_end_byte(TSNode);
-TSPoint ts_node_end_point(TSNode);
 TSSymbol ts_node_symbol(TSNode);
 char *ts_node_string(TSNode);
 bool ts_node_eq(TSNode, TSNode);
@@ -205,13 +228,8 @@ TSNode ts_node_descendant_for_point_range(TSNode, TSPoint, TSPoint);
 TSNode ts_node_named_descendant_for_point_range(TSNode, TSPoint, TSPoint);
 void ts_node_edit(TSNode *, const TSInputEdit *);
 
-TSTreeCursor ts_tree_cursor_new(TSNode);
 void ts_tree_cursor_delete(TSTreeCursor *);
 void ts_tree_cursor_reset(TSTreeCursor *, TSNode);
-TSNode ts_tree_cursor_current_node(const TSTreeCursor *);
-bool ts_tree_cursor_goto_parent(TSTreeCursor *);
-bool ts_tree_cursor_goto_next_sibling(TSTreeCursor *);
-bool ts_tree_cursor_goto_first_child(TSTreeCursor *);
 int64_t ts_tree_cursor_goto_first_child_for_byte(TSTreeCursor *, uint32_t);
 
 */
