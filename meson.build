@@ -21,8 +21,8 @@ tree_sitter_lib = static_library('tree-sitter-runtime', tree_sitter_sources,
     include_directories('vendor/tree-sitter/src'), 
     include_directories('vendor/tree-sitter/include'),
     include_directories('vendor/tree-sitter/externals/utf8proc')
-    ]
-  )
+  ]
+)
 
 tree_sitter_vapi = meson.get_compiler('vala').find_library('libtreesitter', dirs: join_paths(meson.source_root(), 'vapi'))
 
